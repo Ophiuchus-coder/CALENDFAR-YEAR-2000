@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  background: lightblue;
+  color: black;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.calendar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+.month {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  min-width: 260px;
+  max-width: 260px;
+}
+.month h2 {
+  text-align: center;
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
+  color: #3366cc;
+}
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+th, td {
+  width: 14%;
+  text-align: center;
+  padding: 6px 0;
+  border: 1px solid black;
+}
+th {
+  background: #e7efff;
+  font-weight: bold;
+  color: #3366cc;
+}
+td {
+  background: #fafbfc;
+  font-weight: 500;
+}
+.even-row td {
+  background: #fafbfc;
+}
+.odd-row td {
+  background: #e6f2ff;
+}
+.weekend, .even-row .weekend, .odd-row .weekend {
+  background: #ffeaea;
+  color: #c0392b;
+  font-weight: bold;
+}
+.holiday {
+  background: #fff3cc !important;
+  color: #bf9000 !important;
+  border: 2px solid #ffd700;
+  font-weight: bold;
+  position: relative;
+}
+.holiday-list {
+  margin-top: 8px;
+  font-size: 0.95em;
+  color: #bf9000;
+  background: #fffbe6;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ffd700;
+}

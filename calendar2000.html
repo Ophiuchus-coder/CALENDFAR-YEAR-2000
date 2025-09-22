@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar for Year 2000</title>
+  <link rel="stylesheet" href="calendar2000.css">
+</head>
+<body>
+  <h1>Calendar - Year 2000</h1>
+  <div class="calendar-container">
+    <script>
+      const holidays2000 = {
+        "1-1": "New Year's Day",
+        "4-20": "Maundy Thursday",
+        "4-21": "Good Friday",
+        "5-1": "Labor Day",
+        "6-12": "Independence Day",
+        "8-21": "Ninoy Aquino Day",
+        "11-1": "All Saints' Day",
+        "11-30": "Bonifacio Day",
+        "12-25": "Christmas Day",
+        "12-30": "Rizal Day"
+      };
+
+      // Helper to get day of week (0=Sun,...,6=Sat)
+      function getFirstDay(year, month) {
+        return new Date(year, month, 1).getDay();
+      }
+      // Helper for number of days in month
+      function getDaysInMonth(year, month) {
+        return new Date(year, month + 1, 0).getDate();
+      }
+      // Month names
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      const container = document.querySelector('.calendar-container');
+      for (let m = 0; m < 12; m++) {
+        const monthDiv = document.createElement('div');
+        monthDiv.className = 'month';
+        const title = document.createElement('h2');
+        title.textContent = months[m];
+        monthDiv.appendChild(title);
+
+        const table = document.createElement('table');
+        table.className = 'calendar-table';
+
+        const thead = document.createElement('thead');
+        const tr = document.createElement('tr');
+        ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach((d, idx) => {
+          const th = document.createElement('th');
+          th.textContent = d;
+          if (idx === 0 || idx === 6) th.className = "weekend";
+          tr.appendChild(th);
+        });
+        thead.appendChild(tr);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        let firstDay = getFirstDay(2000, m);
+        let daysInMonth = getDaysInMonth(2000, m);
+        let day = 1;
+        let week = 0;
+        // Collect holidays for this month
+        let holidaysThisMonth = [];
+        while (day <= daysInMonth) {
+          const tr = document.createElement('tr');
+          tr.className = week % 2 === 0 ? 'even-row' : 'odd-row';
+          for (let col = 0; col < 7; col++) {
+            const td = document.createElement('td');
+            if ((week === 0 && col < firstDay) || day > daysInMonth) {
+              td.textContent = "";
+            } else {
+              const holidayKey = `${m+1}-${day}`;
+              td.textContent = day;
+              if (col === 0 || col === 6) td.className = "weekend";
+              if (holidays2000[holidayKey]) {
+                td.className += " holiday";
+                td.title = holidays2000[holidayKey];
+                holidaysThisMonth.push({date: day, name: holidays2000[holidayKey]});
+              }
+              day++;
+            }
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+          week++;
+        }
+        table.appendChild(tbody);
+        monthDiv.appendChild(table);
+
+        if (holidaysThisMonth.length > 0) {
+          const holDiv = document.createElement('div');
+          holDiv.className = "holiday-list";
+          holDiv.innerHTML = "<strong>Holidays:</strong> " + holidaysThisMonth.map(h => `${months[m]} ${h.date}: ${h.name}`).join("<br>");
+          monthDiv.appendChild(holDiv);
+        }
+
+        container.appendChild(monthDiv);
+      }
+    </script>
+  </div>
+</body>
+</html>
